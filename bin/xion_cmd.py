@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
-import json
-from xion import Xion
+import os
 
-comms = 'data.json'
+import json
+from xion.xion import Xion
+
+dirname = os.path.dirname(__file__)
+comms = os.path.join(dirname, 'data.json')
 
 data = json.load(open(comms))
 

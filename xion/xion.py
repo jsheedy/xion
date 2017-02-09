@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-__version__ = "0.0.1"
 
 import html
 import random
@@ -10,10 +9,19 @@ import numpy as np
 from scipy.sparse import bsr_matrix, coo_matrix, csc_matrix, csr_matrix, dia_matrix, dok_matrix, lil_matrix
 from sklearn.preprocessing import normalize
 
-
+__version__ = "0.0.1"
 
 
 class Xion():
+    """ usage:
+    xion = Xion()
+    xion.train("Some corpus of text.")
+    xion.train("Can add more training text before normalizing.")
+    xion.normalize()
+    xion.speak()
+
+    ""
+    """
 
     last_index = 0
 
@@ -78,7 +86,7 @@ class Xion():
         tokens = []
 
         # remove urls
-        # no idea how the (?:) bit works, but it matches space or end of string
+        # matche space or end of string
         msg = re.sub('http(s)?:.+(?:\s+|$)', '', msg)
 
         for sentence in msg.strip().split('. '):
@@ -100,10 +108,6 @@ class Xion():
     def train(self, text):
         last_word = None
         for word in self.tokenize(text):
-            if ('http:' in word) or ('https:' in word):
-                # skip links
-                last_word = None
-                continue
             if last_word:
                 self.insert(last_word, word)
             last_word = word
